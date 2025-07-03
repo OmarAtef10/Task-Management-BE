@@ -9,6 +9,7 @@ import org.example.task_management.models.User;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -23,8 +24,8 @@ public class TaskDTO {
     private Date createdAt;
     private Date updatedAt;
     private Date dueDate;
-    private Long userId;
-    private long assignedUserId;
+    private String createdBy;
+    private String assignedUser;
 
 
     public Task toEntity() {
@@ -35,12 +36,10 @@ public class TaskDTO {
         task.setCreatedAt(this.createdAt);
         task.setUpdatedAt(this.updatedAt);
         task.setDueDate(this.dueDate);
-        if(  this.assignedUserId > 0) {
-            User assignedUser = new User();
-
-            assignedUser.setId(this.assignedUserId);
-            task.setAssignedUser(assignedUser);
-
+        if (this.assignedUser != null && !this.assignedUser.isEmpty()) {
+            User user = new User();
+            user.setUsername(this.assignedUser);
+            task.setAssignedUser(user);
         }
 
         return task;
@@ -55,11 +54,9 @@ public class TaskDTO {
         dto.setCreatedAt(task.getCreatedAt());
         dto.setUpdatedAt(task.getUpdatedAt());
         dto.setDueDate(task.getDueDate());
-        dto.setUserId(task.getUser().getId());
+        dto.setCreatedBy(task.getUser().getUsername());
         if (task.getAssignedUser() != null) {
-
-            dto.setAssignedUserId(task.getAssignedUser().getId());
-
+            dto.setAssignedUser(task.getAssignedUser().getUsername());
         }
         return dto;
     }
