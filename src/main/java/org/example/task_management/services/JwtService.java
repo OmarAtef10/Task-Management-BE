@@ -13,7 +13,7 @@ public class JwtService {
 
     private final String SECRET = "mysecretkeymysecretkeymysecretkey12";  // At least 256 bits
 
-    private final long EXPIRATION = 1000 * 60 * 60; // 1 hour
+    private final long EXPIRATION = 1000 * 60 * 60 * 24; // 1 day
 
     private Key getSignKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes());

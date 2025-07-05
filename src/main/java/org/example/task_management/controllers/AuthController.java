@@ -24,13 +24,21 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public Map<String, String> register(@RequestBody AuthRequest request) {
-        return authService.register(request);
+    public ResponseEntity<Map<String, String>> register(@RequestBody AuthRequest request) {
+        Map<String, String> result = authService.register(request);
+        if (result.containsKey("error")) {
+            return ResponseEntity.badRequest().body(result);
+        }
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/login")
-    public Map<String, String> login(@RequestBody AuthRequest request) {
-        return authService.login(request);
+    public ResponseEntity<Map<String, String>> login(@RequestBody AuthRequest request) {
+        Map<String, String> result = authService.login(request);
+        if (result.containsKey("error")) {
+            return ResponseEntity.badRequest().body(result);
+        }
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/redoc")

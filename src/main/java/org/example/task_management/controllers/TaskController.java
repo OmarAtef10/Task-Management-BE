@@ -75,4 +75,16 @@ public class TaskController {
                 .map(TaskDTO::fromEntity)
                 .toList());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TaskDTO> getTaskById(@PathVariable long id,
+                                               @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(401).build(); // Unauthorized
+        }
+        String token = authorizationHeader.substring(7);
+
+        Task task = taskService.getTaskById(token, id);
+        return ResponseEntity.ok(TaskDTO.fromEntity(task));
+    }
 }

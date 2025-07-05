@@ -99,4 +99,19 @@ public class TaskService {
             throw new IllegalArgumentException("User does not exist");
         }
     }
+
+    public Task getTaskById(String token, long taskId) {
+        String username = jwtService.extractUsername(token);
+        User user = userRepository.findUsersByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new IllegalArgumentException("Task not found"));
+
+        if (!Objects.equals(task.getUser().getId(), user.getId())) {
+            throw new IllegalArgumentException("You can only view your own tasks");
+        }
+
+        return task;
+    }
 }
