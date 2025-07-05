@@ -38,3 +38,8 @@ A Spring Boot backend for task management, using PostgreSQL as the database. Doc
 ## Postman Collection Link
 [API Documentaion](https://www.postman.com/universal-trinity-591560/task-management/collection/1276icq/task-management?action=share&creator=18953959&tab=overview)
 
+# NOTE
+- The application uses JWT for authentication. You can register a new user and obtain a token to access protected endpoints.
+- Make Sure that this project is running before running the frontend project as it depends that this server is running and on port 8080.
+
+[Front End Repository](https://github.com/OmarAtef10/Task-Management-FE)
